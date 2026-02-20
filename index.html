@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> New Year</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@300;600&family=Dancing+Script:wght@700&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div id="interactive-pages">
+        <div id="page1" class="page" style="display:flex;">
+            <h1> هاي ب المزه بتعتي هاتي بوسه الاول وانا اوريكي الهديه</h1>
+            <div>
+                <button onclick="showSpecialMessage()">احلي بوسه 😘</button>
+                <button onclick="nextPage(1)">لا طبعا</button>
+            </div>
+        </div>
+
+        <div id="page2" class="page">
+            <h1>هاجي اضربك يلا هاتي بوسه</h1>
+            <div>
+                <button onclick="showSpecialMessage()">ماشي ☺️</button>
+                <button onclick="nextPage(2)">لا</button>
+            </div>
+        </div>
+
+        <div id="page3" class="page">
+            <h1>بطلي رخامه بقا 😒</h1>
+            <div>
+                <button onclick="showSpecialMessage()">خلاص طيب 😊</button>
+                <button onclick="nextPage(3)">لا</button>
+            </div>
+        </div>
+
+        <div id="page4" class="page">
+            <h1>هجبلك شوكليت 😉</h1>
+            <div>
+                <button onclick="showSpecialMessage()">احلي بوسه 😘</button>
+                <button onclick="nextPage(4)">لا</button>
+            </div>
+        </div>
+
+        <div id="page5" class="page">
+            <h1> يلا بقا بوسه حلوه زيك 😘</h1>
+            <div>
+                <button onclick="showSpecialMessage()">موافقة 🥰</button>
+                <button onclick="nextPage(5)">لا</button>
+            </div>
+        </div>
+
+        <div id="page6" class="page">
+            <h1>طب عافية بقا هاخد بوسه 😊😁 </h1>
+            <div>
+                <button onclick="showSpecialMessage()">موافقة بالعافية 😁</button>
+            </div>
+        </div>
+
+        <div id="specialMessagePage" class="page" style="display:none;">
+            <h1>يلهوي ع البوسه ي نااااس 😊😘</h1>
+            <div>
+                <button onclick="goToLock()">يلا بينا نشوف الهديه🎁</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="lock-screen">
+        <div class="lock-box" data-aos="zoom-in">
+            <div class="heart">❤️</div>
+            <h2 style="color: var(--accent-gold);"> </h2>
+            <p>أدخلي كلمة السر ي بنوتي ☺️❤️ </p>
+            <input type="password" id="passInput" placeholder="Enter Your Password">
+            <br>
+            <button class="btn-enter" onclick="checkPassword()">فتح العالم الخاص بنا</button>
+            <p id="error-msg" style="color: #ff4d4d; display: none; margin-top: 15px;">
+                ☺️🥹 كلمة السر غلط ي مزتي ,حاولي ثانيا
+            </p>
+        </div>
+    </div>
+
+    <div id="main-content">
+
+        <header>
+            <h1 data-aos="fade-down">Happy New Year 2026</h1>
+            <div class="countdown" id="timer" data-aos="fade-up"></div>
+            <div class="heart">❤️</div>
+            <p style="font-size: 1.4rem; font-weight: 300;">رغم المسافات.. أنتِ في قلبي أكثر من أي وقت مضى</p>
+        </header>
+
+        <section id="distance" data-aos="fade-up">
+            <h2 style="color: var(--accent-gold);">إلى من يسكن خلف المسافات</h2>
+            <div class="message-card">
+                <p>بيقولوا "البعيد عن العين بعيد عن القلب".. بس هما مش عارفين إنك محفورة في عيني لدرجة إني بشوفك في
+                    كل
+                    الوجوه، وساكنة في قلبي لدرجة إني بسمع صوت دقاتك في سكون الليل. البعد بيعلمني حاجة واحدة بس: إن
+                    مفيش
+                    أي حاجة في الدنيا ليها طعم من غيرك.</p>
+            </div>
+        </section>
+
+        <section id="secret" data-aos="fade-up">
+            <h2 style="color: var(--accent-gold);">جواب خاص لكِ وحدك</h2>
+            <div class="letter-container" onclick="openLetter()">
+                <div class="letter-envelope">
+                    <div style="font-size: 40px;">✉️</div>
+                    <p>إضغطي لفتح الرسالة</p>
+                </div>
+                <div class="letter-content">
+                    <h3>حبيبتي الغالية..</h3>
+                    <p>
+                        في أول دقائق من 2026، مفيش في قلبي غير أمنية واحدة.. إن البعد اللي بيننا يخلص،
+                        ونبدأ نعد سنيننا وإحنا سوا. كل سنة وأنتِ الحلم اللي عايش عشانه، والواقع اللي مش عايز غيره.
+                    </p>
+                    <p>
+                        كل يوم بحس بشوق أكبر ليكي. وعدنا موجود في قلبي، وهفضل محافظ عليه
+                        , نفسي أشوفك، أحضنك، وأشم ريحة قلبك اللي بحس بيها في كل لحظة. ❤️
+                    </p>
+                    <p>
+                        كل يوم بيعدي بيأكد لي إنك مش مجرد شخص دخل حياتي، أنتِ الحياة اللي كنت بدور عليها
+                        طول عمري. ممتن لكل لحظة عرفتك فيها، ومستني اليوم اللي نلغي فيه كلمة "مسافة".
+                    </p>
+                    <p>
+                        وعدي ليكي هفضل أحبك، وهفضل سندك، وهفضل الشخص اللي بيحارب عشان
+                        يشوف ضحكتك. كل عام وأنتِ ملكة قلبي بحبك ي مزتي 😘❤️.
+                    </p>
+                    <p style="font-family: 'Dancing Script'; text-align: left; color: #660000; font-size: 1.5rem;">
+                        Hamada Moawad ❤️</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="eye-section">
+            <div class="eye-wrapper">
+                <div data-aos="zoom-in" data-aos-duration="1200">
+                    <img src="eye.png" alt="Her Eye" class="breathing-image">
+                </div>
+
+                <p data-aos="fade-up" data-aos-delay="1000" data-aos-duration="1000">
+                    نظرة واحدة منك كانت كفاية تخليني أحبك❤️🥹
+                </p>
+            </div>
+        </section>
+
+        <section id="daily-message" data-aos="fade-up">
+            <h2 style="color: var(--accent-gold);">💌 رسالتك اليومية</h2>
+            <p id="message" style="font-size: 1.5rem; margin-top: 15px;"></p>
+        </section>
+
+        <section id="poems" data-aos="fade-up">
+            <h2 style="color: var(--accent-gold);">شعر بين قلبين</h2>
+
+            <div class="poem-card" data-aos="fade-right">
+                <h3>✍️ كلماتكِ</h3>
+                <p>
+                    <!-- هنا هتحط شعرها -->
+                    في ملامحه حكاية رجولةٍ هادئةٍ لا تُشبه أحدًا، تُسكن عينيه البنيتين دفء الشمس ولمعة الأسرار.
+                    أول نظرة إليه تُذيب الصمت، وتسرق النبض قبل القرار.
+
+                    بشرته القمحية كأنها لون الأرض حين يعانقها الغروب،
+                    وابتسامته نغمة دفء تُسكتُ القلوب قبل العيون.
+                    أما ضحكته، ففجر يُشرق وتُضيء بها الحياة وتعود كما كانت نقية السكون.
+
+                    وصوته يحمل نبرة وطن فيها حنين ووعود،
+                    وحضوره كاف لأن يُسكّنَ الفوضى بلا كلام ولا حدود.
+                    له هيبة من صمت، وحنان من ضوء موجود،
+                    كأنه أُتقن من تفاصيل الكون أسرار الحضور،
+                    فصار به الجمال أصدق، والسكوتُ سلام ممدود.
+
+                    هو ذلك النوع النادر من الرجال،
+                    الذي يُشبه الطمأنينة…
+                    حنون بطبعه، صادق بنظره،
+                    وكأن الله خلقه ليذكرنا أن الطيبة ما زالت موجودة، وأنه لا أحد يشبهه، ولن يكون.
+
+                    ويكفيني أنه هو…
+                    بملامحه الرجولية التي تشبه سكون المساء، وبحضوره الذي يُعيد لي معنى الطمأنينة.
+                    يكفيني أنه هو… لا أكثر، ولا أقل،
+                    كأن وجوده كافٍ ليكون لي كل الحياة .<br>
+                    <br>
+                </p>
+            </div>
+
+            <div class="poem-card" data-aos="fade-left">
+                <h3>✍️ كلماتي لكِ</h3>
+                <p>
+                    <!-- هنا هتحط شعرك -->
+                    هي مش عادية...مش شبه أي بنت فـ الدنيا،دي بنت لو شوفتها، تحس إن البدر اتكسف ودار وشّه.
+                    وشها منور، عيونها فيها طيبة الدنيا كلها،
+                    وابتسامتها تهوّن أي وجع، كأنها دواء للقلب.
+                    شعرها الطويل الجميل، دايمًا متغطي بحجابها الفضفاض،
+                    حشمتها تاج على راسها، وجمالها مش في شكلها…
+                    جمالها في قلبها، في حنيّتها اللي تداوي،
+                    في طيبتها اللي تخليك تنسى تعب يومك كله.
+                    قصيرة آه، بس مكانها في قلبي كبير،
+                    تحبني حبّ صادق… زي حبّ عائشة للنبي،
+                    حبّ نقي، طاهر، مفيهوش تكلّف ولا نفاق،
+                    حبّ بيربّي فيّ الطمأنينة، زي الأذان وقت الفجر.
+                    لو سألتني عنها؟
+                    هقولك دي الحب اللي مالوش شبه،
+                    دي دعوة استجيبت، ونعمة من ربّ كريم 💖.
+                    هي مش بس حبّي…
+                    دي أمان عمري وسرّ راحتي،
+                    هي الوطن اللي بروح له وأنا تايه،
+                    هي الحنية وقت خوفي،
+                    هي عالمي،هي هدفي،هي اعظم انجازاتي،هي حبيبتي،هي كتكوتتي،هي بنوتي،هي ندوشتي،هي حبي،هي مين مين
+                    مين،هي
+                    ندا واحده فقط
+                    وجودها في حياتي مش صدفة… دا نصيب كاتبه ربّ كريم. ☺️🥹 <br>
+                    <br>
+
+                </p>
+            </div>
+
+            <div class="poem-card" data-aos="fade-left">
+                <h3>✍️ أحلي كلام سمعته</h3>
+                <p>
+                    <!-- هنا هتحط شعرك -->
+                    💌 رسالة من القلب مع بداية 2026
+
+                    مع بداية السنة الجديدة، حابة أشكرك على كل حاجة حلوة عملتها معايا من غير ما تحس… على وجودك اللي عمره
+                    ما
+                    اتأخر، وعلى صبرك اللي كان دايمًا سابق أي تعب، وعلى كلامك اللي بيخفف عني حتى في أتقل الأيام😌🥰
+                    السنة اللي فاتت ما كانتش أسهل سنة بالنسبالى، بس وجودك فيها خلى كل حاجة أحسن بكتير. وجودك جنبي خصوصًا
+                    في
+                    الأيام اللي كنت فيها مضغوطة كان دايمًا مريح ومُطمن، ووجودك جنبي خلى أي حاجة صعبة تبقى أسهل وأجمل♥️ ،
+                    وكل
+                    يوم بسيط بيبقى ليه طعم مختلف مليان ضحك وفرحة 😍✨.
+                    وأول أمنية ليا مع بداية السنة الجديدة إنك تفضل زي ما أنت… مستحملني 😅🙈، عارفة إني ساعات بعند
+                    ومبسمعش
+                    الكلام، بس صبرك عليا واهتمامك بيا بيخلوا كل حاجه احلى بكتير وبيأكدولي إنك جنبي، شكرا انك كنت دايما
+                    معايا
+                    وسط دوشة السنه اللى فاتت♥️. وكمان في اللحظات اللي بعصبك فيها واطلع عينك😂، عمرك ما قصرت، وده لوحده
+                    كفاية
+                    يعبر عن قد إيه قلبك كبير، غيرتك عليا، وخوفك واهتمامك، وكلامك الهادي والڤويس اللي بتبعته فجأة دا،
+                    كلهم
+                    بيخلوني أحس انك بتحبنى بجد🤍✨، وبيخلوا أي حاجه بسيطة منك تبقى أحلى وكل لحظه بسيطه بتتحول لذكرى
+                    متتنسيش❤️‍🩹
+                    السنة الجديدة جاية ومعاها أمل كبير، وكل اللي بتمناه إن وجودك يفضل جنبي بنفس الحب والدعم والاهتمام،
+                    لأن
+                    وجودك كان ولسه أحلى حاجة في سَنَتِي🫶🏻♥️. <br>
+                    <br>
+                    <hr>
+                    "كلامك دا هيفضل ف قلبي ي مزتي وهفضل سندك وجنبك دايما ... بحبك ي بنوتي❤️☺️"
+                    <hr>
+                </p>
+            </div>
+        </section>
+
+        <section id="reasons" data-aos="fade-up">
+            <h2 style="color: var(--accent-gold);">لماذا أنتِ بالذات؟</h2>
+            <ul class="reasons-list" style="list-style: none; padding: 0; font-size: 1.2rem; text-align: right;">
+                <li data-aos="fade-left">✨ "لأنكِ الأمان الذي لم أجده في أي مكان آخر في هذا العالم المزدحم."</li>
+                <li data-aos="fade-left" data-aos-delay="100">✨ "لأنكِ تملكين قدرة غريبة على جعلي أبتسم حتى في أسوأ
+                    لحظات انكساري."</li>
+                <li data-aos="fade-left" data-aos-delay="200">✨ "لأنني معكِ أشعر بالراحه والحب , مهما بعدت المسافات
+                    ومهما
+                    طال الوقت."</li>
+                <li data-aos="fade-left" data-aos-delay="300">✨ "لأن تفاصيلكِ الصغيرة، ضحكتكِ، وطريقة كلامكِ هي أعظم
+                    انتصاراتي."</li>
+                <li data-aos="fade-left" data-aos-delay="400">✨ "لأنكِ الوحيدة التي تفهم صمتي قبل كلامي، وتحب عيوبي
+                    قبل
+                    مميزاتي."</li>
+                <li data-aos="fade-left" data-aos-delay="500">✨ " لأن وجودكِ معي يجعلني شخصاً أفضل، وأرى الحياة معكِ
+                    افضل واجمل , بحبك ي مزتي
+                    ."</li>
+            </ul>
+        </section>
+
+        <section id="trigger-section" class="surprise-gateway"
+            style="opacity: 0; transform: translateY(50px); transition: all 1s ease-out;">
+            <h2>لحظة واحدة.. فيه مفاجأة تاني! ✨</h2>
+            <a href="birthday.html" class="magic-button">
+                <span>دخول للمفاجأة الجديدة 🎁</span>
+            </a>
+        </section>
+
+        <section id="forever-counter" data-aos="fade-up">
+            <h2 style="color: var(--accent-gold);">⏳ عمر حُبنا</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 20px;">
+                من أول يوم حديثنا مع بعض حتي الان ... وإلى الأبد
+            </p>
+            <div class="countdown" id="loveTimer"></div>
+        </section>
+
+
+        <footer>
+            <p> <i><b>H ❤️ N</b></i> </p>
+            <p>أحبك في 2025.. وأعشقك في 2026.. وإلى الأبد</p>
+            <div class="heart">❤️</div>
+        </footer>
+    </div>
+
+    <div class="music-player">
+        <audio id="bgMusic" loop>
+            <source src="khaleni.mp3" type="audio/mpeg">
+        </audio>
+        <button class="music-btn" onclick="toggleMusic()">🎵</button>
+    </div>
+    <script>
+        window.addEventListener('scroll', function () {
+            const section = document.getElementById('trigger-section');
+            if (!section) return;
+
+            const position = section.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.2;
+
+            if (position < screenPosition) {
+                section.style.opacity = '1';
+                section.style.transform = 'translateY(0)';
+            }
+        });
+
+
+        window.addEventListener("load", function () {
+            if (window.location.hash.includes("main-content")) {
+
+                const interactive = document.getElementById("interactive-pages");
+                const lock = document.getElementById("lock-screen");
+                const main = document.getElementById("main-content");
+
+                if (interactive) interactive.style.display = "none";
+                if (lock) lock.style.display = "none";
+                if (main) {
+                    main.style.display = "block";
+                    setTimeout(() => {
+                        main.scrollIntoView({ behavior: "smooth" });
+                    }, 100);
+                }
+            }
+        });
+
+        <!-- =================================================================== -->
+        // منع كليك يمين
+        document.addEventListener("contextmenu", e => e.preventDefault());
+
+        // منع اختصارات Inspect و View Source
+        document.addEventListener("keydown", function (e) {
+
+            // F12
+            if (e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+
+            // Ctrl+Shift+I / J / C
+            if (e.ctrlKey && e.shiftKey &&
+                (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+                e.preventDefault();
+                return false;
+            }
+
+            // Ctrl+U (View Source)
+            if (e.ctrlKey && e.keyCode === 85) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        (function () {
+            let devtoolsOpen = false;
+
+            setInterval(() => {
+                const start = performance.now();
+                try { debugger; } catch (e) { }
+                const end = performance.now();
+
+                if (end - start > 100 && !devtoolsOpen) {
+                    devtoolsOpen = true;
+                    console.warn("DevTools detected - some protections are active.");
+                    // non-destructive banner instead of replacing whole body
+                    const bannerId = "devtools-warning-banner";
+                    if (!document.getElementById(bannerId)) {
+                        const banner = document.createElement('div');
+                        banner.id = bannerId;
+                        banner.style.position = 'fixed';
+                        banner.style.top = '0';
+                        banner.style.left = '0';
+                        banner.style.right = '0';
+                        banner.style.padding = '12px';
+                        banner.style.background = 'rgba(255,0,0,0.85)';
+                        banner.style.color = '#fff';
+                        banner.style.zIndex = '10000';
+                        banner.style.textAlign = 'center';
+                        banner.textContent = 'Access detection: DevTools open — بعض الحمايات مفعّلة';
+                        document.body.appendChild(banner);
+                    }
+                }
+            }, 1000);
+        })();
+
+        // منع النسخ والقص واللصق
+        document.addEventListener("copy", e => e.preventDefault());
+        document.addEventListener("cut", e => e.preventDefault());
+        document.addEventListener("paste", e => e.preventDefault());
+
+        // منع Ctrl + C / X / V / A
+        document.addEventListener("keydown", function (e) {
+
+            if (e.ctrlKey && (
+                e.keyCode === 67 || // C
+                e.keyCode === 88 || // X
+                e.keyCode === 86 || // V
+                e.keyCode === 65    // A
+            )) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+
+    </script>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</body>
+
+</html>
