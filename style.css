@@ -592,3 +592,40 @@ img {
 .magic-button:hover::before {
     left: 100%;
 }
+
+/* --- حل مشكلة اهتزاز الشاشة على الموبايل --- */
+
+/* 1. حجز مساحة ثابتة للرسالة اليومية عشان الصفحة م تنطش */
+#daily-message {
+    min-height: 250px; /* بيحجز مكان للرسالة قبل ما تظهر */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden; /* بيمنع أي خروج للعناصر عن الحدود */
+}
+
+#message {
+    display: block;
+    min-height: 100px;
+    word-wrap: break-word; /* بيخلي الكلام ينزل سطر جديد لو طويل */
+}
+
+/* 2. تأمين السكاشن اللي فيها صور وحركة */
+section {
+    overflow: hidden; /* بيضمن إن أي حركة داخلية متخليش الصفحة تتهز يمين وشمال */
+    max-width: 95%; /* أنسب للموبايل من 900px */
+}
+
+/* 3. تعديل بسيط للموبايل */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem; /* عشان العنوان ميكسرش السطر ويخرب التصميم */
+    }
+    .countdown div {
+        min-width: 60px;
+        font-size: 1rem;
+    }
+    #daily-message {
+        min-height: 300px; /* مساحة أكبر شوية لسطور الموبايل */
+    }
+}
