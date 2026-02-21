@@ -1,4 +1,3 @@
-
 document.body.classList.add('locked-screen');
 document.body.classList.remove('locked-screen');
 
@@ -30,130 +29,6 @@ function openLetter() {
 function toggleMusic() {
     const music = document.getElementById('bgMusic');
     music.paused ? music.play() : music.pause();
-}
-
-// 1. دالة إطلاق الألعاب النارية (مستقلة)
-function launchFireworks() {
-    // === ملاحظة: هذه النسخة الأخيرة ستكون هي المستخدمة (تعريف لاحق يطغى على سابقه) ===
-    const duration = 15 * 1000; // مدة الاحتفال 15 ثانية
-    const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
-
-    function randomInRange(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
-    // لو مكتبة confetti موجودة استخدمها، وإلا استخدم بديل canvas داخلي
-    if (typeof confetti !== 'function') {
-        console.warn('canvas-confetti not found — using local canvas fallback for fireworks.');
-        startCanvasFireworks(duration);
-        return;
-    }
-
-    const interval = setInterval(function () {
-        const timeLeft = animationEnd - Date.now();
-
-        if (timeLeft <= 0) {
-            return clearInterval(interval);
-        }
-
-        const particleCount = Math.floor(50 * (timeLeft / duration));
-        // إطلاق مفرقعات من زوايا مختلفة فوق الهيدر
-        confetti(Object.assign({}, defaults, {
-            particleCount,
-            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
-        }));
-        confetti(Object.assign({}, defaults, {
-            particleCount,
-            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
-        }));
-    }, 250);
-}
-
-/* ===== بديل بسيط للألعاب النارية باستخدام canvas (يعمل لو مش موجود confetti) ===== */
-function startCanvasFireworks(duration = 15000) {
-    // أنشئ canvas مؤقت
-    const canvas = document.createElement('canvas');
-    canvas.id = '__fallback_fireworks_canvas';
-    canvas.style.position = 'fixed';
-    canvas.style.left = '0';
-    canvas.style.top = '0';
-    canvas.style.width = '100%';
-    canvas.style.height = '100%';
-    canvas.style.pointerEvents = 'none';
-    canvas.style.zIndex = '9999';
-    document.body.appendChild(canvas);
-
-    const ctx = canvas.getContext('2d');
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    let particles = [];
-    function rand(min, max) { return Math.random() * (max - min) + min; }
-
-    class P {
-        constructor(x, y, vx, vy, life, color) {
-            this.x = x; this.y = y; this.vx = vx; this.vy = vy; this.life = life; this.color = color;
-            this.alpha = 1;
-        }
-        step() {
-            this.x += this.vx; this.y += this.vy;
-            this.vy += 0.05;
-            this.vx *= 0.99; this.vy *= 0.99;
-            this.life--;
-            this.alpha = Math.max(0, this.life / 60);
-            return this.life <= 0;
-        }
-        draw(ctx) {
-            ctx.globalAlpha = this.alpha;
-            ctx.beginPath();
-            ctx.fillStyle = this.color;
-            ctx.arc(this.x, this.y, Math.max(1, this.alpha * 3), 0, Math.PI * 2);
-            ctx.fill();
-            ctx.globalAlpha = 1;
-        }
-    }
-
-    let running = true;
-    const startTime = Date.now();
-    function step() {
-        if (!running) return;
-        requestAnimationFrame(step);
-        ctx.fillStyle = 'rgba(0,0,0,0.12)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // spawn occasional bursts
-        if (Math.random() < 0.12) {
-            const cx = rand(canvas.width * 0.1, canvas.width * 0.9);
-            const cy = rand(canvas.height * 0.1, canvas.height * 0.5);
-            const color = `hsl(${Math.floor(rand(0, 360))} 80% 60%)`;
-            for (let i = 0; i < 60; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const speed = rand(1, 6);
-                particles.push(new P(cx, cy, Math.cos(angle) * speed, Math.sin(angle) * speed, Math.floor(rand(20, 80)), color));
-            }
-        }
-
-        for (let i = particles.length - 1; i >= 0; i--) {
-            const p = particles[i];
-            if (p.step()) particles.splice(i, 1);
-            else p.draw(ctx);
-        }
-
-        if (Date.now() - startTime > duration) {
-            running = false;
-            // fade out then remove
-            setTimeout(() => {
-                try { window.removeEventListener('resize', resize); } catch (e) { }
-                if (canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas);
-            }, 800);
-        }
-    }
-    step();
 }
 
 /* 2. تحديث دالة العداد اللي عندك (استبدال لسطر التاريخ الثابت بديناميكي) */
@@ -206,9 +81,6 @@ function startCountdown() {
 
 startCountdown();
 
-
-
-
 const messages = [
     "أحبك اليوم أكثر من أمس 💖",
     "أنتِ سبب ابتسامتي 😊",
@@ -243,7 +115,7 @@ const messages = [
 ];
 
 function showDailyMessage() {
-    const startDate = new Date(2025, 6, 23); // 23/7/2025
+    const startDate = new Date(2025, 7, 23); // 23/7/2025
     const now = new Date();
     const diffDays = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
     const index = diffDays % messages.length; // يظهر رسالة جديدة كل يوم بشكل دائري
