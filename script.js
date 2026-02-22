@@ -1,74 +1,93 @@
-document.body.classList.add('locked-screen');
-document.body.classList.remove('locked-screen');
+/* ============================================================
+   script.js — نسخة مُصلَّحة بالكامل
+   ============================================================ */
 
+/* ===== 1. مرجع عناصر DOM (مرة واحدة بس) ===== */
+const passInput    = document.getElementById('passInput');
+const bgMusic      = document.getElementById('bgMusic');
+const lockScreen   = document.getElementById('lock-screen');
+const mainContent  = document.getElementById('main-content');
+
+/* ===== 2. إعداد AOS ===== */
 AOS.init({ duration: 1200, once: true });
 
-/* ===== تصحيح: تعريف عناصر DOM اللي بنستخدمها كتير ===== */
-const passInput = document.getElementById('passInput');
-const bgMusic = document.getElementById('bgMusic');
+/* ===== 3. قفل الشاشة عند التحميل ===== */
+document.body.classList.add('locked-screen');
 
-/* ===== وظيفة التحقق من كلمة السر (كما هي) ===== */
+/* ============================================================
+   التحقق من كلمة السر
+   ============================================================ */
 function checkPassword() {
-    const pass = document.getElementById('passInput').value;
-    if (pass.trim() === "23/7/2025") {
-        document.getElementById('lock-screen').style.transform = 'translateY(-100%)';
+    const pass = passInput ? passInput.value.trim() : '';
+
+    if (pass === "23/7/2025") {
+        // 1. شغّل الموسيقى
+        if (bgMusic) bgMusic.play().catch(() => {});
+
+        // 2. اختفاء شاشة القفل
+        lockScreen.classList.add('fade-out');
+
+        // 3. جهّز المحتوى الرئيسي
+        mainContent.style.display = "block";
+
+        // 4. بعد ثانية: اخفِ القفل وأظهر المحتوى
         setTimeout(() => {
-            document.getElementById('lock-screen').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            document.getElementById('bgMusic').play().catch(e => console.log("Interaction required for music"));
+            lockScreen.style.display = "none";
+            document.body.classList.remove('locked-screen');
+            mainContent.classList.add('show');
+            if (typeof AOS !== 'undefined') AOS.refresh();
         }, 1000);
+
     } else {
-        document.getElementById('error-msg').style.display = 'block';
+        const errEl = document.getElementById("error-msg");
+        if (errEl) errEl.style.display = "block";
     }
 }
 
+/* ============================================================
+   فتح / إغلاق المظروف
+   ============================================================ */
 function openLetter() {
-    document.querySelector('.letter-container').classList.toggle('open');
+    const letter = document.querySelector('.letter-container');
+    if (letter) letter.classList.toggle('open');
 }
 
+/* ============================================================
+   تشغيل / إيقاف الموسيقى
+   ============================================================ */
 function toggleMusic() {
-    const music = document.getElementById('bgMusic');
-    music.paused ? music.play() : music.pause();
+    if (!bgMusic) return;
+    bgMusic.paused ? bgMusic.play() : bgMusic.pause();
 }
 
-/* 2. تحديث دالة العداد اللي عندك (استبدال لسطر التاريخ الثابت بديناميكي) */
-function getNextJanFirst() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const candidate = new Date(year, 0, 1, 0, 0, 0, 0); // 1 يناير نفس السنة (00:00)
-    return now < candidate ? candidate.getTime() : new Date(year + 1, 0, 1, 0, 0, 0, 0).getTime();
-}
-
-let targetTime = getNextJanFirst();
-
+/* ============================================================
+   العداد التنازلي لرأس السنة  (إصلاح: حذف setInterval للـ updateCountdown غير المعرَّفة)
+   ============================================================ */
 function startCountdown() {
     const timerElement = document.getElementById('timer');
-    const nextYear = new Date('1 Jan 2026 00:00:00').getTime();
+    if (!timerElement) return;
+
+    // تاريخ ثابت: أول يناير 2026
+    const targetDate = new Date('Jan 1, 2026 00:00:00').getTime();
 
     const interval = setInterval(() => {
-        const now = new Date().getTime();
-        const diff = nextYear - now;
-
-        if (!timerElement) return;
+        const now  = Date.now();
+        const diff = targetDate - now;
 
         if (diff <= 0) {
-            // أول مرة يوصل الصفر: الاحتفال
             if (!timerElement.classList.contains('celebrating')) {
-                timerElement.innerHTML = `<div> 🎉 بدأت سنتنا الجديده 2026 وانا معي اجمل بنوته ف الدنيا 🎉 </div>`;
+                timerElement.innerHTML = `<div>🎉 بدأت سنتنا الجديدة 2026 وأنا مع أجمل بنوتة في الدنيا 🎉</div>`;
                 timerElement.classList.add('celebrating');
-                launchFireworks();
-                document.body.classList.remove('locked-screen');
+                launchFireworks();           // ← معرَّفة أدناه
             }
-
-            clearInterval(interval); // أهم خطوة: إيقاف العداد نهائيًا
+            clearInterval(interval);
             return;
         }
 
-        // حساب الوقت المتبقي
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+        const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const secs  = Math.floor((diff % (1000 * 60)) / 1000);
 
         timerElement.innerHTML = `
             <div>${days} يوم</div>
@@ -81,75 +100,115 @@ function startCountdown() {
 
 startCountdown();
 
+/* ============================================================
+   الألعاب النارية (إصلاح: كانت غير معرَّفة فيسبب crash)
+   ============================================================ */
+function launchFireworks() {
+    if (typeof confetti === 'undefined') return; // تأكد من وجود المكتبة
+
+    const duration  = 5 * 1000;
+    const end       = Date.now() + duration;
+
+    (function frame() {
+        confetti({
+            particleCount: 5,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 }
+        });
+        confetti({
+            particleCount: 5,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 }
+        });
+        if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+}
+
+/* ============================================================
+   الرسالة اليومية
+   (إصلاح: الشهر كان 7 بدل 6 — الشهور في JS تبدأ من 0)
+   ============================================================ */
 const messages = [
     "أحبك اليوم أكثر من أمس 💖",
     "أنتِ سبب ابتسامتي 😊",
     "قلبي ملكك فقط ❤️",
-    "لو قصيتي شعرك هنفخك✨",
+    "لو قصيتي شعرك هنفخك ✨",
     "هاي مزتي 🌹",
     "وجودك يدفئ أيامي 🔥",
     "خلي بالك من رسمتي 😍",
     "أنتِ ملكة قلبي 👑",
     "حبي لك لا ينتهي ♾️",
     "كل يوم أحبك أكثر 💞",
-    "خلي بالك من هديتي دي انا تعبان فيها ❤️",
+    "خلي بالك من هديتي دي أنا تعبان فيها ❤️",
     "معك الدنيا أحلى 🌸",
-    " انا جعان ي مزتي🥹",
+    "أنا جعان يا مزتي 🥹",
     "أنتِ أمنيتي الجميلة ✨",
     "كل لحظة بدونك ناقصة 💕",
     "ضحكتك تغني عن أي كلمات 😍",
     "أنتِ الفرح في حياتي 🌹",
-    "مفيش حضن كدا ولا بوسه تدفيني ف الجو دا ي بنوتي💓",
+    "مفيش حضن كده ولا بوسة تدفيني في الجو ده يا بنوتي 💓",
     "أنتِ الأمان والحنان 🌟",
     "كل ثانية معك ذكرى جميلة ⏳",
-    "بردو مش عايزه تديني بوسه 😘",
+    "بردو مش عايزة تديني بوسة 😘",
     "أنتِ ضوء أيامي المظلمة 🌞",
-    "متسهريش كتير .بشوفك فاتحه بالليل💖",
+    "متسهريش كتير، بشوفك فاتحة بالليل 💖",
     "نو تويست نو ريدبول ❤️",
-    "يوم جديد لاجمل ام يوسف ف الدنيا💕",
+    "يوم جديد لأجمل أم يوسف في الدنيا 💕",
     "كل يوم أحبك أكثر وأكثر 🥰",
     "نينينينيني 🌸",
     "أنتِ سبب كل سعادتي 🌟",
-    "بجبككككك ي كتكوتي ",
-    "تقلي ع نفسك ي بنوتي متخففيش ف الشتا دي ❤️"
+    "بجبككككك يا كتكوتي 😘",
+    "تقلي عَ نفسك يا بنوتي متخففيش في الشتا دي ❤️"
 ];
 
 function showDailyMessage() {
-    const startDate = new Date(2025, 7, 23); // 23/7/2025
-    const now = new Date();
-    const diffDays = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
-    const index = diffDays % messages.length; // يظهر رسالة جديدة كل يوم بشكل دائري
+    // إصلاح: الشهر 6 = يوليو (الشهور من 0)
+    const startDate = new Date(2025, 6, 23);
+    const now       = new Date();
+    const diffDays  = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+    const index     = ((diffDays % messages.length) + messages.length) % messages.length;
+
     const msgEl = document.getElementById("message");
-    if (msgEl) msgEl.innerText = messages[index];
+    if (msgEl) {
+        msgEl.style.opacity = '0';
+        setTimeout(() => {
+            msgEl.innerText  = messages[index];
+            msgEl.style.opacity = '1';
+        }, 300);
+    }
 }
 
 showDailyMessage();
-setInterval(showDailyMessage, 1000 * 60 * 60); // تحديث كل ساعة فقط لضمان الرسالة اليومية
+// تحديث كل ساعة فقط — مش كل ثانية عشان متعبش الجهاز
+setInterval(showDailyMessage, 1000 * 60 * 60);
 
-
+/* ============================================================
+   عداد عمر الحُب
+   ============================================================ */
 function updateLoveCounter() {
-    const startDate = new Date(2025, 6, 23, 0, 0, 0); // 23/7/2025 (الشهر يبدأ من 0)
-    const now = new Date();
+    // إصلاح: الشهر 6 = يوليو
+    const startDate = new Date(2025, 6, 23, 0, 0, 0);
+    const now       = new Date();
 
-    let years = now.getFullYear() - startDate.getFullYear();
-    let months = now.getMonth() - startDate.getMonth();
-    let days = now.getDate() - startDate.getDate();
+    let years  = now.getFullYear() - startDate.getFullYear();
+    let months = now.getMonth()    - startDate.getMonth();
+    let days   = now.getDate()     - startDate.getDate();
 
     if (days < 0) {
         months--;
         days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
     }
-
     if (months < 0) {
         years--;
         months += 12;
     }
 
-    const diffMs = now - startDate;
-    const totalSeconds = Math.floor(diffMs / 1000);
-    const seconds = totalSeconds % 60;
-    const minutes = Math.floor(totalSeconds / 60) % 60;
-    const hours = Math.floor(totalSeconds / 3600) % 24;
+    const totalSecs = Math.floor((now - startDate) / 1000);
+    const seconds   = totalSecs % 60;
+    const minutes   = Math.floor(totalSecs / 60) % 60;
+    const hours     = Math.floor(totalSecs / 3600) % 24;
 
     const loveEl = document.getElementById("loveTimer");
     if (loveEl) {
@@ -167,27 +226,10 @@ function updateLoveCounter() {
 setInterval(updateLoveCounter, 1000);
 updateLoveCounter();
 
-setInterval(updateCountdown, 1000); // تحديث كل ثانية
-
-// -------------------------------------------------------------------------------------------------------
-
-
-function nextPage(current) {
-    const curr = document.getElementById("page" + current);
-    if (curr) curr.style.display = 'none';
-    let next = current + 1;
-    const nextEl = document.getElementById("page" + next);
-    if (nextEl) {
-        nextEl.style.display = 'flex';
-    }
-}
-
-function goToLock() {
-    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-    document.getElementById('lock-screen').style.display = 'flex';
-    if (passInput) passInput.focus();
-}
-
+/* ============================================================
+   الصفحات التفاعلية
+   (إصلاح: تعريف واحد بس لكل دالة)
+   ============================================================ */
 function nextPage(current) {
     const curr = document.getElementById("page" + current);
     if (curr) curr.style.display = "none";
@@ -197,65 +239,30 @@ function nextPage(current) {
 }
 
 function goToLock() {
-    document.getElementById("interactive-pages").style.display = "none";
-    document.getElementById("lock-screen").style.display = "flex";
-    document.getElementById("passInput").focus();
+    const interactivePages = document.getElementById("interactive-pages");
+    if (interactivePages) interactivePages.style.display = "none";
+
+    if (lockScreen) {
+        lockScreen.style.display = "flex";
+        lockScreen.classList.remove('fade-out'); // إعادة الظهور لو كانت مختفية
+    }
+    if (passInput) passInput.focus();
 }
-
-
 
 function showSpecialMessage() {
-    // أولاً: نخفي كل الصفحات الموجودة
-    const pages = document.querySelectorAll('.page');
-    pages.forEach(page => {
-        page.style.display = 'none';
-    });
+    // إخفاء كل الصفحات
+    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
 
-    // ثانياً: نظهر صفحة الرسالة الخاصة فقط
+    // إظهار صفحة الرسالة الخاصة
     const specialPage = document.getElementById('specialMessagePage');
-    if (specialPage) {
-        specialPage.style.display = 'flex';
-    }
+    if (specialPage) specialPage.style.display = 'flex';
 }
 
-// تأكد أن دالة nextPage لا تزال موجودة لديك لتبديل الصفحات عند الرفض
-function nextPage(currentPageNumber) {
-    // إخفاء الصفحة الحالية
-    document.getElementById('page' + currentPageNumber).style.display = 'none';
-    // إظهار الصفحة التالية
-    const next = document.getElementById('page' + (currentPageNumber + 1));
-    if (next) {
-        next.style.display = 'flex';
-    }
-} function checkPassword() {
-    const pass = document.getElementById("passInput").value;
-
-    if (pass === "23/7/2025") {
-        const lockScreen = document.getElementById("lock-screen");
-        const mainContent = document.getElementById("main-content");
-
-        // 1. ابدأ بتشغيل الموسيقى
-        document.getElementById("bgMusic").play().catch(() => { });
-
-        // 2. إضافة تأثير الاختفاء لشاشة القفل
-        lockScreen.classList.add('fade-out');
-
-        // 3. تجهيز المحتوى الرئيسي للظهور (بدون opacity في البداية)
-        mainContent.style.display = "block";
-
-        // 4. بعد ثانية (وقت الـ fade-out) نخفي القفل تماماً ونظهر المحتوى
-        setTimeout(() => {
-            lockScreen.style.display = "none";
-            mainContent.classList.add('show');
-
-            // تفعيل AOS لإعادة حساب الأنميشين بعد الظهور
-            if (typeof AOS !== 'undefined') {
-                AOS.refresh();
-            }
-        }, 1000); // 1000 مللي ثانية تساوي 1 ثانية
-
-    } else {
-        document.getElementById("error-msg").style.display = "block";
-    }
+/* ============================================================
+   Enter key على حقل كلمة السر
+   ============================================================ */
+if (passInput) {
+    passInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') checkPassword();
+    });
 }
-
