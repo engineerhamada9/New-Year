@@ -6,13 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>عيد ميلاد أغلى الناس | ندوشتي ❤️</title>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;600;900&family=Dancing+Script:wght@700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;600;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* === Root Variables === */
         :root {
             --primary: #ff4d6d;
             --primary-light: #ff758f;
@@ -24,11 +21,13 @@
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* === General Styles === */
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
         }
 
         body {
@@ -40,20 +39,23 @@
             line-height: 1.6;
         }
 
-        /* شاشة البداية عشان الميوزك تشتغل صح */
+        /* ===== شاشة البداية ===== */
         #start-screen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+            inset: 0;
             background: var(--bg-dark);
             z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            gap: 20px;
             transition: opacity 1s ease;
+        }
+
+        #start-screen p {
+            font-size: 1.2rem;
+            opacity: 0.7;
         }
 
         .start-btn {
@@ -65,24 +67,16 @@
             border-radius: 50px;
             font-family: 'Cairo', sans-serif;
             cursor: pointer;
-            box-shadow: 0 0 20px var(--primary);
+            box-shadow: 0 0 30px var(--primary);
             animation: pulse 1.5s infinite;
         }
 
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-
-            100% {
-                transform: scale(1);
-            }
+            0%, 100% { transform: scale(1); }
+            50%       { transform: scale(1.05); }
         }
 
+        /* ===== عامة ===== */
         section {
             padding: 80px 20px;
             max-width: 1200px;
@@ -97,7 +91,7 @@
             text-shadow: 0 0 10px rgba(255, 77, 109, 0.3);
         }
 
-        /* === Navigation === */
+        /* ===== Navigation ===== */
         nav {
             position: fixed;
             top: 0;
@@ -130,7 +124,7 @@
             box-shadow: 0 0 15px var(--primary);
         }
 
-        /* === Hero Section === */
+        /* ===== Hero ===== */
         header {
             height: 100vh;
             display: flex;
@@ -149,25 +143,27 @@
             z-index: 2;
             margin-bottom: 15px;
             min-height: 1.2em;
+            padding: 0 20px;
         }
 
         .subtitle {
             font-size: clamp(1rem, 4vw, 1.5rem);
             opacity: 0.9;
             z-index: 2;
+            padding: 0 20px;
         }
 
-        /* === Animated Hearts Background === */
+        /* ===== القلوب المتحركة ===== */
         .circles {
             position: absolute;
             width: 100%;
             height: 100%;
             z-index: 1;
+            list-style: none;
         }
 
         .circles li {
             position: absolute;
-            list-style: none;
             background: rgba(255, 77, 109, 0.2);
             animation: animate 20s linear infinite;
             bottom: -150px;
@@ -175,42 +171,49 @@
         }
 
         @keyframes animate {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(-1200px) rotate(720deg);
-                opacity: 0;
-            }
+            0%   { transform: translateY(0) rotate(0deg);   opacity: 1; }
+            100% { transform: translateY(-1200px) rotate(720deg); opacity: 0; }
         }
 
-        /* === Love Counter === */
+        /* ===== عداد الحب ===== */
+        /* إصلاح: كانت متعرفةش ومكانتش بتشتغل */
         .love-counter-section {
             background: var(--glass);
             border-radius: 30px;
-            margin: -50px auto 40px;
+            margin: 40px auto;
             text-align: center;
-            padding: 30px;
+            padding: 30px 20px;
             border: 1px solid var(--primary);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             max-width: 800px;
             backdrop-filter: blur(10px);
-            position: relative;
-            z-index: 10;
+        }
+
+        .love-counter-section h2 {
+            margin-bottom: 20px;
         }
 
         .love-timer {
-            font-size: clamp(1.2rem, 3vw, 2rem);
-            color: var(--primary-light);
-            font-weight: bold;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
             margin-top: 15px;
             direction: ltr;
-            letter-spacing: 2px;
         }
 
-        /* === Timeline (رحلتنا سوا) === */
+        .love-timer div {
+            background: rgba(255, 77, 109, 0.15);
+            border: 1px solid rgba(255, 77, 109, 0.4);
+            border-radius: 12px;
+            padding: 10px 18px;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--primary-light);
+            font-weight: bold;
+            min-width: 70px;
+        }
+
+        /* ===== Timeline ===== */
         .timeline-container {
             position: relative;
             padding: 40px 0;
@@ -235,7 +238,7 @@
             width: 50%;
             opacity: 0;
             transform: translateY(30px);
-            transition: 0.8s ease-out forwards;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
 
         .timeline-item.show {
@@ -256,19 +259,9 @@
             z-index: 1;
         }
 
-        .left {
-            left: 0;
-            text-align: left;
-        }
-
-        .right {
-            left: 50%;
-            text-align: right;
-        }
-
-        .right::after {
-            left: -10px;
-        }
+        .left  { left: 0;   text-align: left; }
+        .right { left: 50%; text-align: right; }
+        .right::after { left: -10px; right: auto; }
 
         .timeline-content {
             padding: 25px;
@@ -276,7 +269,6 @@
             backdrop-filter: blur(10px);
             border-radius: 20px;
             border: 1px solid var(--glass-border);
-            position: relative;
             transition: var(--transition);
         }
 
@@ -286,10 +278,10 @@
             box-shadow: 0 10px 20px rgba(255, 77, 109, 0.2);
         }
 
-        /* === Reasons Cards === */
+        /* ===== Cards ===== */
         .cards-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
             gap: 30px;
         }
 
@@ -309,20 +301,12 @@
             box-shadow: 0 10px 30px rgba(255, 77, 109, 0.4);
         }
 
-        .card i {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-            transition: 0.3s;
-        }
-
+        .card i { font-size: 3.5rem; margin-bottom: 20px; color: var(--primary); transition: 0.3s; }
         .card:hover i,
         .card:hover h3,
-        .card:hover p {
-            color: white;
-        }
+        .card:hover p { color: white; }
 
-        /* === Gallery === */
+        /* ===== Gallery ===== */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -336,6 +320,7 @@
             border-radius: 20px;
             transition: var(--transition);
             border: 2px solid var(--glass-border);
+            pointer-events: none;
         }
 
         .grid img:hover {
@@ -344,7 +329,7 @@
             filter: brightness(1.1);
         }
 
-        /* === Gift Section === */
+        /* ===== Gift Section ===== */
         .gift-section {
             text-align: center;
             background: linear-gradient(to bottom, var(--bg-dark), var(--secondary));
@@ -355,25 +340,13 @@
         .gift-box {
             animation: bounce 2s infinite;
             margin-top: 20px;
+            display: inline-block;
         }
 
         @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-20px);
-            }
-
-            60% {
-                transform: translateY(-10px);
-            }
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40%  { transform: translateY(-20px); }
+            60%  { transform: translateY(-10px); }
         }
 
         .letter {
@@ -385,9 +358,16 @@
             border: 2px dashed var(--primary);
             display: none;
             animation: fadeIn 1.5s;
+            text-align: right;
+            line-height: 2;
         }
 
-        /* === Controls === */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== زر الموسيقى ===== */
         .music-btn {
             position: fixed;
             bottom: 30px;
@@ -405,140 +385,127 @@
             color: white;
             font-size: 1.5rem;
             transition: var(--transition);
+            border: none;
         }
 
-        .music-btn:hover {
-            transform: scale(1.1);
-        }
+        .music-btn:hover { transform: scale(1.1); }
 
-        /* === Responsive === */
+        /* ===== Responsive ===== */
         @media (max-width: 768px) {
             .timeline-container::after {
-                left: 30px;
+                left: 20px;
             }
 
             .timeline-item {
                 width: 100%;
-                padding-left: 20px;
-                padding-right: 60px;
-                /* تم التعديل عشان العربي RTL */
+                padding-left: 60px;
+                padding-right: 15px;
                 text-align: right !important;
-                /* تم التعديل للعربي */
+                left: 0 !important;
             }
 
-            .timeline-item.left,
-            .timeline-item.right {
-                left: 0;
-            }
-
-            /* تظبيط النقطة في الموبايل */
-            .timeline-item::after {
-                right: 20px !important;
-                left: auto !important;
-            }
-
+            .timeline-item::after,
             .timeline-item.right::after {
-                right: 20px !important;
-                left: auto !important;
+                right: auto !important;
+                left: 10px !important;
             }
 
-            section {
-                padding: 50px 15px;
-            }
+            section { padding: 50px 15px; }
+            h2      { font-size: 1.8rem; }
 
-            h2 {
-                font-size: 1.8rem;
-            }
-        }
+            .letter { padding: 25px 20px; }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+            .music-btn {
+                bottom: 20px;
+                left: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
             }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* منع تحديد النص */
-        * {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
         }
     </style>
 </head>
 
 <body>
 
+    <!-- ===== شاشة البداية ===== -->
     <div id="start-screen">
+        <p>🎂 مفاجأة في انتظارك ❤️</p>
         <button class="start-btn" onclick="startExperience()">اضغطي هنا عشان تبدأي الحكاية ❤️</button>
     </div>
 
+    <!-- ===== Navigation ===== -->
     <nav>
-        <span style="font-family: 'Dancing Script'; font-size: 1.5rem; color: var(--primary);">Happy Birthday</span>
+        <span style="font-family: 'Dancing Script'; font-size: 1.5rem; color: var(--primary);">Happy Birthday 🎂</span>
         <a href="index.html" class="back-button">
             <i class="fas fa-arrow-right"></i> الرجوع
         </a>
     </nav>
 
+    <!-- ===== Hero ===== -->
     <header id="home">
         <ul class="circles" id="hearts-container"></ul>
         <h1 id="typing-text"></h1>
         <p class="subtitle">كل سنة وأنتِ أجمل حاجة نورت حياتي ❤️</p>
     </header>
 
-    <!-- قسم جديد: ليه بحبك؟ -->
+    <!-- ===== عداد الحب (إصلاح: كانت بتتنادى ومش معرفة) ===== -->
+    <div class="love-counter-section">
+        <h2>⏳ وأنا عارف بيكي</h2>
+        <p>من أول يوم حديثنا مع بعض وأنا سعيد إنك في حياتي</p>
+        <div class="love-timer" id="loveTimer">
+            <div>جاري الحساب...</div>
+        </div>
+    </div>
+
+    <!-- ===== ليه بحبك ===== -->
     <section id="reasons">
         <h2>أسباب بتخليني أحبك أكتر كل يوم ✨</h2>
         <div class="cards-container">
             <div class="card">
                 <i class="fas fa-smile-beam"></i>
                 <h3>طفولتك</h3>
-                <p>اللي بحبها من قلبي وببقا بحبك اكتر وانتي طفله .</p>
+                <p>اللي بحبها من قلبي وببقا بحبك أكتر وأنتي طفلة.</p>
             </div>
             <div class="card">
                 <i class="fas fa-heart"></i>
                 <h3>حنيتك</h3>
-                <p>اللي مفيش زيها في الدنيا، وقلبك الأبيض اللي بيحبني
-                    أددددددد كدا.</p>
+                <p>اللي مفيش زيها في الدنيا، وقلبك الأبيض اللي بيحبني أددددددد كده.</p>
             </div>
             <div class="card">
                 <i class="fas fa-star"></i>
                 <h3>وجودك</h3>
-                <p>إنك دايماً سندي وفي ضهري في كل وقت ومطمناني.</p>
+                <p>إنك دايماً سندي وفي ضهري في كل وقت وبتطمنيني.</p>
             </div>
         </div>
     </section>
 
+    <!-- ===== Timeline ===== -->
     <section id="timeline">
-        <h2> مواقفنا سوا 🛤️</h2>
+        <h2>مواقفنا سوا 🛤️</h2>
         <div class="timeline-container">
-            <div class="timeline-item lift">
+            <div class="timeline-item left">
                 <div class="timeline-content">
                     <h3>أول يوم عرفتك فيه 📅</h3>
                     <p>اليوم ده كان بداية أحلى صدفة غيرت حياتي كلها للأجمل.</p>
                 </div>
             </div>
-            <div class="timeline-item lift">
+            <div class="timeline-item right">
                 <div class="timeline-content">
-                    <h3>موقف مش هنساه </h3>
-                    <p>فاكرة لما شوفتك اول مره لابسه دريس وكنت ماشي ببصلك , كنتي قمر اوي ي مزتي 😘.</p>
+                    <h3>موقف مش هنساه</h3>
+                    <p>فاكرة لما شوفتك أول مرة لابسة دريس وكنت ماشي وبصلك... كنتي قمر أوي يا مزتي 😘</p>
                 </div>
             </div>
-            <div class="timeline-item lift">
+            <div class="timeline-item left">
                 <div class="timeline-content">
-                    <h3> موقف تاني </h3>
-                    <p>فاكره لما الكلب هاو هاو عيكي 🙂.</p>
+                    <h3>موقف تاني</h3>
+                    <p>فاكرة لما الكلب هاو هاو عيّكي 🙂</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ===== الهدية ===== -->
     <section class="gift-section">
         <h2>هدية بسيطة ليكي.. افتحيها 🎁</h2>
         <div class="gift-box" onclick="openGift()" style="cursor: pointer;">
@@ -546,94 +513,121 @@
         </div>
 
         <div id="gift-msg" class="letter">
-            <h2 style="color: var(--primary);">إلى أميرة قلبي وصاحبة ضحكتي... 💌</h2>
-            <p style="font-size: 1.2rem; line-height: 2;">
-                🥳🥳🥳🥳 النهارده يوم مش عادي 🥳🥳🥳🥳 <br>
-                النهارده مش بس عيد ميلادك، النهارده عيد ميلاد سعادتي.. <br>
+            <h2 style="color: var(--primary); text-align: center;">إلى أميرة قلبي وصاحبة ضحكتي... 💌</h2>
+            <p style="font-size: 1.2rem;">
+                🥳🥳🥳🥳 النهارده يوم مش عادي 🥳🥳🥳🥳 <br><br>
+                النهارده مش بس عيد ميلادك، النهارده عيد ميلاد سعادتي..
                 كل سنة وأنتِ طيبة يا ندوشتي، يا أجمل صدفة حصلت في عمري. <br><br>
 
                 بتمنالك سنة كلها ضحك وفرحة شبه قلبك، وأوعدك إني هفضل دايماً جنبك،
                 سندك وحبيبك وصاحبك اللي بيطمنك في كل اللحظات، زي ما إنتي دايماً بتطمنيني. <br><br>
 
                 أنا يمكن مبعرفش أعبّر دايمًا صح، ومش دايمًا بلاقي الكلام اللي يوصف إحساسي،
-                بس الحقيقة إن وجودك جنبي نعمة كبيرة بحمد ربنا عليها كل يوم. إنتي أماني ومكاني المفضل.
-                <br><br>
+                بس الحقيقة إن وجودك جنبي نعمة كبيرة بحمد ربنا عليها كل يوم.
+                إنتي أماني ومكاني المفضل. <br><br>
 
-                بتمنالك سنة مليانة فرح، راحة بال، وضحكة من قلبك متغيبش أبدًا.
-                وأتمنى أكون دايمًا الشخص اللي يحتويكي، ويفرحك، ويقف في ضهرك مهما الدنيا عملت.
-                <br><br>
+                بتمنالك سنة مليانة فرح، راحة بال، وضحكة من قلبك ما تغيبش أبدًا.
+                وأتمنى أكون دايمًا الشخص اللي يحتويكي، ويفرحك، ويقف في ضهرك مهما الدنيا عملت. <br><br>
 
                 بحبك حب صادق… مش كلام بيتقال،
-                دا اهتمام، خوف عليكي، ودعوة ليكي في كل صلاة.
-                <br><br>
+                ده اهتمام، خوف عليكي، ودعوة ليكي في كل صلاة. <br><br>
 
-                وكل سنة وانتي معايا، وقريبة من قلبي أكتر وأكتر❤️🎂. <br>
-                كل سنه وانتي طيبه ي مزتي 😘 <br>
-                كل سنه وانتي طيبه ي ندوشتي ☺️ <br>
-                كل سنه وانتي طيبه ي بنوتي ❤️☺️<br>
-                كل سنه وانتي طيبه ي احلي وأغلى حاجة في حياتي 💕🥹 <br><br>
+                وكل سنة وأنتِ معايا، وقريبة من قلبي أكتر وأكتر ❤️🎂 <br><br>
 
-                <b><i>بحبك يا أجمل ندوشه في الدنيا ❤️😘</i></b>
+                كل سنة وأنتِ طيبة يا مزتي 😘 <br>
+                كل سنة وأنتِ طيبة يا ندوشتي ☺️ <br>
+                كل سنة وأنتِ طيبة يا بنوتي ❤️☺️ <br>
+                كل سنة وأنتِ طيبة يا أحلى وأغلى حاجة في حياتي 💕🥹 <br><br>
+
+                <b><i>بحبك يا أجمل ندوشة في الدنيا ❤️😘</i></b>
             </p>
         </div>
     </section>
 
-    <div class="music-btn" onclick="toggleMusic()">
+    <!-- ===== زر الموسيقى ===== -->
+    <button class="music-btn" onclick="toggleMusic()">
         <i id="music-icon" class="fas fa-music"></i>
-    </div>
+    </button>
 
-    <!-- حط أغنية الخلفية هنا -->
     <audio id="bgMusic" loop>
         <source src="birthday.mp3" type="audio/mp3">
     </audio>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
     <script>
-        // 1. القلوب المتحركة
+        /* ===== القلوب المتحركة ===== */
         const heartsContainer = document.getElementById('hearts-container');
         for (let i = 0; i < 15; i++) {
             const li = document.createElement('li');
-            li.style.left = Math.random() * 100 + '%';
-            li.style.width = li.style.height = Math.random() * 80 + 20 + 'px';
-            li.style.animationDelay = Math.random() * 10 + 's';
-            li.style.animationDuration = Math.random() * 10 + 10 + 's';
+            li.style.left              = Math.random() * 100 + '%';
+            li.style.width             =
+            li.style.height            = (Math.random() * 80 + 20) + 'px';
+            li.style.animationDelay    = Math.random() * 10 + 's';
+            li.style.animationDuration = (Math.random() * 10 + 10) + 's';
             heartsContainer.appendChild(li);
         }
 
-        // 2. تأثير الكتابة
-        const text = "كل سنة وأنتِ طيبة يا ندوشتي ❤️😘";
-        let index = 0;
+        /* ===== تأثير الكتابة ===== */
+        const typingText = "كل سنة وأنتِ طيبة يا ندوشتي ❤️😘";
+        let typingIndex  = 0;
+
         function typeEffect() {
-            if (index < text.length) {
-                document.getElementById("typing-text").textContent += text.charAt(index);
-                index++;
+            if (typingIndex < typingText.length) {
+                document.getElementById("typing-text").textContent += typingText.charAt(typingIndex);
+                typingIndex++;
                 setTimeout(typeEffect, 100);
             }
         }
 
+        /* ===== عداد الحب (إصلاح: كانت updateCounter مش معرفة) ===== */
+        function updateCounter() {
+            // تاريخ البداية: 23 يوليو 2025 (الشهر 6 = يوليو)
+            const startDate  = new Date(2025, 6, 23, 0, 0, 0);
+            const now        = new Date();
 
-        // 4. انميشن الـ Timeline
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('show');
-            });
-        }, { threshold: 0.2 });
+            let years  = now.getFullYear() - startDate.getFullYear();
+            let months = now.getMonth()    - startDate.getMonth();
+            let days   = now.getDate()     - startDate.getDate();
 
-        document.querySelectorAll('.timeline-item').forEach(item => observer.observe(item));
+            if (days < 0) {
+                months--;
+                days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
 
-        // 5. الألعاب النارية
-        function shootFireworks() {
-            const duration = 3 * 1000;
-            const end = Date.now() + duration;
+            const totalSecs = Math.floor((now - startDate) / 1000);
+            const hours     = Math.floor(totalSecs / 3600) % 24;
+            const minutes   = Math.floor(totalSecs / 60)   % 60;
+            const seconds   = totalSecs % 60;
 
-            (function frame() {
-                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
-                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
+            const el = document.getElementById('loveTimer');
+            if (el) {
+                el.innerHTML = `
+                    <div>${years} سنة</div>
+                    <div>${months} شهر</div>
+                    <div>${days} يوم</div>
+                    <div>${hours} ساعة</div>
+                    <div>${minutes} دقيقة</div>
+                    <div>${seconds} ثانية</div>
+                `;
+            }
         }
 
-        // 6. شاشة البداية والموسيقى
+        /* ===== الألعاب النارية ===== */
+        function shootFireworks() {
+            const end = Date.now() + 3000;
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60,  spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            })();
+        }
+
+        /* ===== شاشة البداية ===== */
         const music = document.getElementById("bgMusic");
 
         function startExperience() {
@@ -641,14 +635,15 @@
             startScreen.style.opacity = "0";
             setTimeout(() => startScreen.style.display = "none", 1000);
 
-            // تشغيل الموسيقى (ممكن المتصفح يمنعها لو مفيش ملف حقيقي، فتأكد من إضافة الملف)
-            music.play().catch(e => console.log("الموسيقى هتحتاج ملف mp3 حقيقي"));
+            music.play().catch(() => {});
 
             typeEffect();
             updateCounter();
+            setInterval(updateCounter, 1000); // تحديث كل ثانية
             shootFireworks();
         }
 
+        /* ===== تشغيل / إيقاف الموسيقى ===== */
         function toggleMusic() {
             const icon = document.getElementById('music-icon');
             if (music.paused) {
@@ -660,96 +655,68 @@
             }
         }
 
-        // 7. فتح الهدية
+        /* ===== فتح الهدية ===== */
         function openGift() {
-            const img = document.getElementById('gift-img');
-            img.src = "https://cdn-icons-png.flaticon.com/512/4213/4213998.png";
-            document.getElementById('gift-msg').style.display = 'block';
+            document.getElementById('gift-img').src =
+                "https://cdn-icons-png.flaticon.com/512/4213/4213998.png";
+
+            const msg = document.getElementById('gift-msg');
+            msg.style.display = 'block';
+
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
             shootFireworks();
+
             setTimeout(() => {
                 window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             }, 500);
         }
 
-        // منع كليك يمين
+        /* ===== انميشن الـ Timeline ===== */
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('show');
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.timeline-item').forEach(item => observer.observe(item));
+
+        /* ===== حماية ===== */
         document.addEventListener("contextmenu", e => e.preventDefault());
+        document.addEventListener("copy",  e => e.preventDefault());
+        document.addEventListener("cut",   e => e.preventDefault());
+        document.addEventListener("paste", e => e.preventDefault());
 
-        // منع اختصارات Inspect و View Source
         document.addEventListener("keydown", function (e) {
-
-            // F12
-            if (e.keyCode === 123) {
-                e.preventDefault();
-                return false;
+            if (e.keyCode === 123) { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && [73, 74, 67].includes(e.keyCode)) {
+                e.preventDefault(); return false;
             }
-
-            // Ctrl+Shift+I / J / C
-            if (e.ctrlKey && e.shiftKey &&
-                (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
-                e.preventDefault();
-                return false;
-            }
-
-            // Ctrl+U (View Source)
-            if (e.ctrlKey && e.keyCode === 85) {
-                e.preventDefault();
-                return false;
+            if (e.ctrlKey && [85, 67, 88, 86, 65].includes(e.keyCode)) {
+                e.preventDefault(); return false;
             }
         });
 
         (function () {
             let devtoolsOpen = false;
-
             setInterval(() => {
                 const start = performance.now();
-                try { debugger; } catch (e) { }
-                const end = performance.now();
-
-                if (end - start > 100 && !devtoolsOpen) {
+                try { debugger; } catch (e) {}
+                if (performance.now() - start > 100 && !devtoolsOpen) {
                     devtoolsOpen = true;
-                    console.warn("DevTools detected - some protections are active.");
-                    // non-destructive banner instead of replacing whole body
-                    const bannerId = "devtools-warning-banner";
-                    if (!document.getElementById(bannerId)) {
-                        const banner = document.createElement('div');
-                        banner.id = bannerId;
-                        banner.style.position = 'fixed';
-                        banner.style.top = '0';
-                        banner.style.left = '0';
-                        banner.style.right = '0';
-                        banner.style.padding = '12px';
-                        banner.style.background = 'rgba(255,0,0,0.85)';
-                        banner.style.color = '#fff';
-                        banner.style.zIndex = '10000';
-                        banner.style.textAlign = 'center';
-                        banner.textContent = 'Access detection: DevTools open — بعض الحمايات مفعّلة';
-                        document.body.appendChild(banner);
+                    if (!document.getElementById("devtools-banner")) {
+                        const b = document.createElement('div');
+                        b.id = "devtools-banner";
+                        Object.assign(b.style, {
+                            position: 'fixed', top: '0', left: '0', right: '0',
+                            padding: '12px', background: 'rgba(255,0,0,0.85)',
+                            color: '#fff', zIndex: '99999', textAlign: 'center'
+                        });
+                        b.textContent = 'DevTools open — بعض الحمايات مفعّلة';
+                        document.body.appendChild(b);
                     }
                 }
             }, 1000);
         })();
-
-        // منع النسخ والقص واللصق
-        document.addEventListener("copy", e => e.preventDefault());
-        document.addEventListener("cut", e => e.preventDefault());
-        document.addEventListener("paste", e => e.preventDefault());
-
-        // منع Ctrl + C / X / V / A
-        document.addEventListener("keydown", function (e) {
-
-            if (e.ctrlKey && (
-                e.keyCode === 67 || // C
-                e.keyCode === 88 || // X
-                e.keyCode === 86 || // V
-                e.keyCode === 65    // A
-            )) {
-                e.preventDefault();
-                return false;
-            }
-        });
-
     </script>
 </body>
-
 </html>
